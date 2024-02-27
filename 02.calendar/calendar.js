@@ -3,23 +3,25 @@
 import minimist from "minimist";
 
 const today = new Date();
+// 引数と帳尻合わせ
 today.setMonth(today.getMonth() + 1);
-var args = minimist(process.argv.slice(2), {
+const args = minimist(process.argv.slice(2), {
   default: {
     y: today.getFullYear(),
     m: today.getMonth(),
   },
 });
 
-var firstDate = new Date();
-var lastDate = new Date();
-var dates = { first: firstDate, last: lastDate };
-var datesValues = Object.values(dates);
+const firstDate = new Date();
+const lastDate = new Date();
+const dates = { first: firstDate, last: lastDate };
+const datesValues = Object.values(dates);
 
 datesValues.forEach(function (value) {
   value.setFullYear(args["y"]);
 });
 
+// 正しい月に戻す
 firstDate.setMonth(args["m"] - 1);
 firstDate.setDate(1);
 
@@ -35,24 +37,24 @@ for (let i = 0; i < firstDay; i++) {
   process.stdout.write("   ");
 }
 
-var countN = 1;
+let countNumber = 1;
 
 for (let i = firstDay; i < 7; i++) {
-  process.stdout.write(` ${countN}`);
+  process.stdout.write(` ${countNumber}`);
   process.stdout.write(" ");
-  countN++;
+  countNumber++;
 }
 process.stdout.write("\n");
 
-var pointSa = 7 - firstDay;
+const saturday = (7 - firstDay) % 7;
 
-for (countN; countN <= lastDate.getDate(); countN++) {
-  if (countN < 10) {
+for (countNumber; countNumber <= lastDate.getDate(); countNumber++) {
+  if (countNumber < 10) {
     process.stdout.write(" ");
   }
-  process.stdout.write(`${countN}`);
+  process.stdout.write(`${countNumber}`);
   process.stdout.write(" ");
-  if (countN % 7 == pointSa) {
+  if (countNumber % 7 == saturday) {
     process.stdout.write("\n");
   }
 }
