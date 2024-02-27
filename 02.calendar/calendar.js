@@ -11,19 +11,14 @@ const args = minimist(process.argv.slice(2), {
 });
 
 const firstDate = new Date();
-const lastDate = new Date();
-const dates = { first: firstDate, last: lastDate };
-const datesValues = Object.values(dates);
 
-datesValues.forEach(function (value) {
-  value.setFullYear(args["y"]);
-});
-
+firstDate.setFullYear(args["y"]);
 firstDate.setMonth(args["m"] - 1);
 firstDate.setDate(1);
 
 const firstDay = firstDate.getDay();
 
+const lastDate = new Date();
 lastDate.setMonth(args["m"]);
 lastDate.setDate(0);
 
