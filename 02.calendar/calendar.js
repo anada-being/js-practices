@@ -3,12 +3,10 @@
 import minimist from "minimist";
 
 const today = new Date();
-// 引数と帳尻合わせ
-today.setMonth(today.getMonth() + 1);
 const args = minimist(process.argv.slice(2), {
   default: {
     y: today.getFullYear(),
-    m: today.getMonth(),
+    m: today.getMonth() + 1,
   },
 });
 
@@ -21,7 +19,6 @@ datesValues.forEach(function (value) {
   value.setFullYear(args["y"]);
 });
 
-// 正しい月に戻す
 firstDate.setMonth(args["m"] - 1);
 firstDate.setDate(1);
 
