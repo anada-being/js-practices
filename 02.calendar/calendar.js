@@ -22,7 +22,9 @@ const lastDate = new Date();
 lastDate.setMonth(args["m"]);
 lastDate.setDate(0);
 
-console.log(`   ${Intl.DateTimeFormat("en-US", { month: "long" }).format(firstDate)} ${args["y"]}`);
+const year = firstDate.getFullYear();
+
+console.log(`   ${Intl.DateTimeFormat("en-US", { month: "long" }).format(firstDate)} ${year}`);
 console.log("Su Mo Tu We Th Fr Sa");
 
 for (let i = 0; i < firstDay; i++) {
