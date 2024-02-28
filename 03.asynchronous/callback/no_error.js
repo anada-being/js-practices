@@ -18,7 +18,6 @@ db.run("drop table if exists books", (err) => {
       if (err) throw err;
       db.get("select * from books where rowid = last_insert_rowid()", (err, row) => {
         if (err) throw err;
-        console.log("自動採番された IDの取得成功");
         console.log(row["id"]);
         db.all("select * from books", (err, data) => {
           if (err) throw err;
