@@ -9,18 +9,18 @@ const lastDate = new Date();
 const month = args["m"];
 const year = args["y"];
 
-try{
-  if (month != undefined && (!(month > 0 && month < 13)) ){
+try {
+  if (month != undefined && !(month > 0 && month < 13)) {
     throw new Error(`cal: ${month} is not a month number (1..12)`);
   }
-  if (year != undefined && (!(year > 1969 && year < 2101 || year === true))){
+  if (year != undefined && !((year > 1969 && year < 2101) || year === true)) {
     throw new Error(`cal: not a valid year ${year}`);
   }
 
-  if(month){
+  if (month) {
     setMonth(month);
   }
-  if (year){
+  if (year) {
     setYear(year);
   }
 
@@ -29,7 +29,11 @@ try{
   lastDate.setDate(0);
   const firstDay = firstDate.getDay();
 
-  console.log(`   ${Intl.DateTimeFormat("en-US", { month: "long" }).format(firstDate)} ${firstDate.getFullYear()}`);
+  console.log(
+    `   ${Intl.DateTimeFormat("en-US", { month: "long" }).format(
+      firstDate
+    )} ${firstDate.getFullYear()}`
+  );
   console.log("Su Mo Tu We Th Fr Sa");
 
   for (let i = 0; i < firstDay; i++) {
@@ -62,16 +66,16 @@ try{
   console.log(e.message);
 }
 
-function setMonth(month){
-  if(month == firstDate.getMonth()){
+function setMonth(month) {
+  if (month == firstDate.getMonth()) {
     return true;
   }
   const monthForSet = args["m"] - 1;
   firstDate.setMonth(monthForSet);
   lastDate.setMonth(monthForSet);
 }
-function setYear(year){
-  if (year === true || year == firstDate.getFullYear()){
+function setYear(year) {
+  if (year === true || year == firstDate.getFullYear()) {
     return true;
   }
   firstDate.setFullYear(year);
