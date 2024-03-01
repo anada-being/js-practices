@@ -9,16 +9,20 @@ const createTableQuery = `
   )
 `;
 
-const droptable = new Promise((resolve) => {
-  db.run("drop table if exists books", () => resolve());
-});
 
 
 
-droptable
+droptable()
   .then(() => createTable(createTableQuery))
   .then(() => insertRow("test"))
+  .then(() => getLastRowId())
   .then(() => getRows());
+
+function droptable() {
+  return new Promise((resolve) => {
+    db.run("DROP TABLE if exists books", () => resolve());
+  });
+}
 
 function createTable(createTableQuery) {
   return new Promise((resolve) => {
@@ -27,14 +31,36 @@ function createTable(createTableQuery) {
 }
 
 function insertRow(title) {
-  return new Promise((resolve) => {
-    db.run("INSERT INTO books(title) values(?)", title, () => resolve());
+  return new Promise((resolve, reject) => {
+    db.run("INSERT INTO books(title) values(?)", title, (err) => {
+      if (err) {
+        reject(err);
+      }
+      resolve();
+    });
+  });
+}
+
+function getLastRowId(){
+  return new Promise((resolve, reject) => {
+    db.get("select * from books where rowid = last_insert_rowid()", (err, row) => {
+      if (err) {
+        () => reject(err);
+      }
+      console.log(row["id"]);
+    },() => resolve());
   });
 }
 
 function getRows() {
-  db.all("select * from books", (err, data) => {
-    if (err) throw err;
-    console.log(data);
+  return new Promise((resolve, reject) => {
+    db.all("select * from books", (err, rows) => {
+      if (err) {
+        () => reject(err);
+      }
+      console.log(rows);
+      () => resolve()
+    });
   });
 }
+export { droptable, createTable, insertRow, getLastRowId, getRows }
