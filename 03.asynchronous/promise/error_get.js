@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import { droptable, createTable, insertRow, getLastRowId, getRows } from "./no_nest_error.js";
+// import { } from "./no_nest_error.js";
 const createTableQuery = `
   CREATE TABLE IF NOT EXISTS books (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -8,10 +9,10 @@ const createTableQuery = `
   )
 `;
 
-droptable()
-.then(() => createTable(createTableQuery))
-.then(() => insertRow("a"))
-.then(() => getLastRowId())
-.then(() => droptable())
-.then(() => getRows())
-.catch((err) => console.log(err.message));
+// droptable()
+// .then(() => createTable(createTableQuery))
+// .then(() => insertRow("a"))
+// .then(() => getLastRowId())
+// .then(() => droptable())
+// .then(() => getRows())
+// .catch((err) => console.log(err.message));

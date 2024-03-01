@@ -9,9 +9,6 @@ const createTableQuery = `
   )
 `;
 
-
-
-
 droptable()
   .then(() => createTable(createTableQuery))
   .then(() => insertRow("test"))
@@ -67,4 +64,4 @@ function getRows() {
   });
 }
 
-export { droptable, createTable, insertRow, getLastRowId, getRows }
+export { droptable, createTable, insertRow, getLastRowId, getRows };
