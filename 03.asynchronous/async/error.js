@@ -1,18 +1,22 @@
 #!/usr/bin/env node
 
-import { createTableQuery, droptable, createTable, insertRow, getLastRowId, getRows } from "./no_error.js";
+import { createTableQuery, droptable, createTable, insertRow, getRows } from "../common.js";
 
 errorGet();
 
 async function errorGet(){
   await droptable();
   await createTable(createTableQuery);
-  await insertRow("errorGet");
-  await getLastRowId();
+  try {
+    await insertRow();
+  }catch (err) {
+    console.log(err.message);
+  }
   await droptable();
   try {
     await getRows();
   }catch (err) {
     console.log(err.message);
   }
+  await droptable();
 }

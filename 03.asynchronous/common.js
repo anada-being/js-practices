@@ -9,13 +9,6 @@ const createTableQuery = `
   )
 `;
 
-droptable()
-  .then(() => createTable(createTableQuery))
-  .then(() => insertRow("test"))
-  .then(() => getLastRowId())
-  .then(() => getRows())
-  .then(() => db.close());
-
 function droptable() {
   return new Promise((resolve) => {
     db.run("DROP TABLE if exists books", () => resolve());
@@ -55,13 +48,13 @@ function getRows() {
   return new Promise((resolve, reject) => {
     db.all("select * from books", (err, rows) => {
       if (err) {
-        reject(new Error(err));
+        reject(err);
       }else {
         console.log(rows);
-        () => resolve();
+        resolve();
       }
     });
   });
 }
 
-export { droptable, createTable, insertRow, getLastRowId, getRows };
+export { createTableQuery, droptable, createTable, insertRow, getLastRowId, getRows }
