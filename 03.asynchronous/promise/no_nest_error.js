@@ -16,7 +16,8 @@ droptable()
   .then(() => createTable(createTableQuery))
   .then(() => insertRow("test"))
   .then(() => getLastRowId())
-  .then(() => getRows());
+  .then(() => getRows())
+  .then(() => db.close());
 
 function droptable() {
   return new Promise((resolve) => {
@@ -45,10 +46,11 @@ function getLastRowId(){
   return new Promise((resolve, reject) => {
     db.get("select * from books where rowid = last_insert_rowid()", (err, row) => {
       if (err) {
-        () => reject(err);
+        reject(err);
       }
       console.log(row["id"]);
-    },() => resolve());
+      resolve();
+    });
   });
 }
 
@@ -56,11 +58,13 @@ function getRows() {
   return new Promise((resolve, reject) => {
     db.all("select * from books", (err, rows) => {
       if (err) {
-        () => reject(err);
+        reject(new Error(err));
+      }else {
+        console.log(rows);
+        () => resolve();
       }
-      console.log(rows);
-      () => resolve()
     });
   });
 }
+
 export { droptable, createTable, insertRow, getLastRowId, getRows }
