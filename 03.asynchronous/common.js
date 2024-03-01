@@ -17,7 +17,7 @@ function droptable() {
 
 function createTable(createTableQuery) {
   return new Promise((resolve) => {
-  db.run(createTableQuery,() => resolve());
+    db.run(createTableQuery, () => resolve());
   });
 }
 
@@ -32,15 +32,18 @@ function insertRow(title) {
   });
 }
 
-function getLastRowId(){
+function getLastRowId() {
   return new Promise((resolve, reject) => {
-    db.get("select * from books where rowid = last_insert_rowid()", (err, row) => {
-      if (err) {
-        reject(err);
-      }
-      console.log(row["id"]);
-      resolve();
-    });
+    db.get(
+      "select * from books where rowid = last_insert_rowid()",
+      (err, row) => {
+        if (err) {
+          reject(err);
+        }
+        console.log(row["id"]);
+        resolve();
+      },
+    );
   });
 }
 
@@ -49,7 +52,7 @@ function getRows() {
     db.all("select * from books", (err, rows) => {
       if (err) {
         reject(err);
-      }else {
+      } else {
         console.log(rows);
         resolve();
       }
@@ -57,4 +60,11 @@ function getRows() {
   });
 }
 
-export { createTableQuery, droptable, createTable, insertRow, getLastRowId, getRows }
+export {
+  createTableQuery,
+  droptable,
+  createTable,
+  insertRow,
+  getLastRowId,
+  getRows,
+};

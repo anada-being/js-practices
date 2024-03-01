@@ -16,15 +16,18 @@ db.run("drop table if exists books", (err) => {
     if (err) throw err;
     db.run("INSERT INTO books(title) values(?)", "test", (err) => {
       if (err) throw err;
-      db.get("select * from books where rowid = last_insert_rowid()", (err, row) => {
-        if (err) throw err;
-        console.log(row["id"]);
-        db.all("select * from books", (err, data) => {
+      db.get(
+        "select * from books where rowid = last_insert_rowid()",
+        (err, row) => {
           if (err) throw err;
-          console.log(data);
-        });  
-      });
+          console.log(row["id"]);
+          db.all("select * from books", (err, data) => {
+            if (err) throw err;
+            console.log(data);
+            db.run("drop table if exists books");
+          });
+        },
+      );
     });
   });
 });
-db.close();

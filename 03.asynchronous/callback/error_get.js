@@ -16,16 +16,17 @@ db.run("drop table if exists books", (err) => {
     if (err) throw err;
     db.run("INSERT INTO books(title) VALUES(?)", "test", (err) => {
       if (err) throw err;
-      db.get("select * from books where rowid = last_insert_rowid()", (err, row) => {
-        if (err) throw err;
-        console.log(row["id"]);
-        db.all("select * from book", (err, data) => {
-          if (err) throw "Not book but books";
-          console.log(data);
-        });  
-      });
+      db.get(
+        "select * from books where rowid = last_insert_rowid()",
+        (err, row) => {
+          if (err) throw err;
+          console.log(row["id"]);
+          db.all("select * from book", (err, data) => {
+            if (err) throw "Not book but books";
+            console.log(data);
+          });
+        },
+      );
     });
   });
 });
-
-db.close();
