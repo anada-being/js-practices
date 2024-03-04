@@ -19,7 +19,7 @@ try {
   }
 }
 try {
-  await allPromise("select * from book");
+  await allPromise("SELECT * FROM book");
 } catch (err) {
   if (err["errno"] == 1) {
     console.log(err.message);

@@ -11,8 +11,8 @@ const createTableQuery = `
 `;
 const insertRowQuery =
   "INSERT INTO books (title) VALUES ('Ruby入門') RETURNING id";
-const selectQuery = "select * from books";
-const dropQuery = "drop table if exists books";
+const selectQuery = "SELECT * FROM books";
+const dropQuery = "DROP TABLE books";
 
 function runPromise(query) {
   return new Promise((resolve) => {

@@ -17,7 +17,7 @@ runPromise(createTableQuery)
       console.log(err);
     }
   })
-  .then(() => allPromise("select * from book"))
+  .then(() => allPromise("SELECT * FROM book"))
   .catch((err) => {
     if (err["errno"] == 1) {
       console.log(err.message);

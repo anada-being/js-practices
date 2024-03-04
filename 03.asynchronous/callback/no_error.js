@@ -14,9 +14,9 @@ db.run(
       "INSERT INTO books (title) VALUES ('Ruby入門') RETURNING id",
       (err, rowId) => {
         console.log(rowId);
-        db.all("select * from books", (err, rows) => {
+        db.all("SELECT * FROM books", (err, rows) => {
           console.log(rows);
-          db.run("drop table if exists books");
+          db.run("DROP TABLE books");
         });
       },
     );

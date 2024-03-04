@@ -19,7 +19,7 @@ db.run(
       } catch (err) {
         console.log(err.message);
       }
-      db.all("select * from book", (err) => {
+      db.all("SELECT * FROM book", (err) => {
         try {
           if (err["errno"] == 1) {
             throw err;
@@ -28,7 +28,7 @@ db.run(
         } catch (err) {
           console.log(err.message);
         }
-        db.run("drop table if exists books");
+        db.run("DROP TABLE books");
       });
     });
   },
