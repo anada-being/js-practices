@@ -10,7 +10,19 @@ import {
 
 runPromise(createTableQuery)
   .then(() => getPromise("INSERT INTO books (title) VALUES (null)"))
-  .catch((err) => console.log(err.message))
+  .catch((err) => {
+    if (err["errno"] == 19) {
+      console.log(err.message);
+    } else {
+      console.log(err);
+    }
+  })
   .then(() => allPromise("select * from book"))
-  .catch((err) => console.log(err.message))
+  .catch((err) => {
+    if (err["errno"] == 1) {
+      console.log(err.message);
+    } else {
+      console.log(err);
+    }
+  })
   .then(() => runPromise(dropQuery));

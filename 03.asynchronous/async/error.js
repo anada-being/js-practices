@@ -2,8 +2,6 @@
 
 import {
   createTableQuery,
-  insertRowQuery,
-  selectQuery,
   dropQuery,
   runPromise,
   getPromise,
@@ -11,6 +9,22 @@ import {
 } from "../common_function_query.js";
 
 await runPromise(createTableQuery);
-await getPromise(insertRowQuery);
-await allPromise(selectQuery);
+try {
+  await getPromise("INSERT INTO books (title) VALUES (null)");
+} catch (err) {
+  if (err["errno"] == 19) {
+    console.log(err.message);
+  } else {
+    console.log(err);
+  }
+}
+try {
+  await allPromise("select * from book");
+} catch (err) {
+  if (err["errno"] == 1) {
+    console.log(err.message);
+  } else {
+    console.log(err);
+  }
+}
 await runPromise(dropQuery);

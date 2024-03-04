@@ -9,17 +9,18 @@ const createTableQuery = `
     title TEXT NOT NULL UNIQUE
   )
 `;
-const insertRowQuery = "INSERT INTO books (title) VALUES ('Ruby入門') RETURNING id";
+const insertRowQuery =
+  "INSERT INTO books (title) VALUES ('Ruby入門') RETURNING id";
 const selectQuery = "select * from books";
 const dropQuery = "drop table if exists books";
 
-function runPromise(query){
+function runPromise(query) {
   return new Promise((resolve) => {
     db.run(query, () => resolve());
   });
 }
 
-function getPromise(query){
+function getPromise(query) {
   return new Promise((resolve, reject) => {
     db.get(query, (err, rowId) => {
       if (err) {
@@ -32,7 +33,7 @@ function getPromise(query){
   });
 }
 
-function allPromise(query){
+function allPromise(query) {
   return new Promise((resolve, reject) => {
     db.all(query, (err, rows) => {
       if (err) {
@@ -52,5 +53,5 @@ export {
   dropQuery,
   runPromise,
   getPromise,
-  allPromise
+  allPromise,
 };
