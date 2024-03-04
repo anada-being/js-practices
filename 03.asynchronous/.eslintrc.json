@@ -10,9 +10,5 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "rules": {
-    "semi": ["error", "always"],    // セミコロンをつけるかつけないか
-    "semi-style": ["error", "last"],    // セミコロンを行末に書くか、次の文の行頭に書くか
-    "no-extra-semi": "error"    // 余分なセミコロンを禁止する
-  }
+  "rules": {}
 }
