@@ -13,18 +13,18 @@ try {
   await getPromise("INSERT INTO books (title) VALUES (null)");
 } catch (err) {
   if (err["errno"] == 19) {
-    console.log(err.message);
+    console.error(err.message);
   } else {
-    console.log(err);
+    console.error(err);
   }
 }
 try {
   await allPromise("SELECT * FROM book");
 } catch (err) {
   if (err["errno"] == 1) {
-    console.log(err.message);
+    console.error(err.message);
   } else {
-    console.log(err);
+    console.error(err);
   }
 }
 await runPromise(dropQuery);

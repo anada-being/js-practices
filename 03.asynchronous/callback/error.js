@@ -15,18 +15,18 @@ db.run(
         if (err["errno"] == 19) {
           throw err;
         }
-        console.log(err);
+        console.error(err);
       } catch (err) {
-        console.log(err.message);
+        console.error(err.message);
       }
       db.all("SELECT * FROM book", (err) => {
         try {
           if (err["errno"] == 1) {
             throw err;
           }
-          console.log(err);
+          console.error(err);
         } catch (err) {
-          console.log(err.message);
+          console.error(err.message);
         }
         db.run("DROP TABLE books");
       });
