@@ -10,7 +10,7 @@ db.run(
 )`,
   () => {
     db.get(
-      "INSERT INTO books (title) VALUES ('test') RETURNING id",
+      "INSERT INTO books (title) VALUES ('Ruby入門') RETURNING id",
       (err, rowId) => {
         console.log(rowId);
         db.all("select * from books", (err, rows) => {

@@ -2,16 +2,15 @@
 
 import {
   createTableQuery,
-  droptable,
-  createTable,
-  insertRow,
-  getRows,
-} from "../common.js";
+  dropQuery,
+  runPromise,
+  getPromise,
+  allPromise,
+} from "../common_function_query.js";
 
-droptable()
-  .then(() => createTable(createTableQuery))
-  .then(() => insertRow())
+runPromise(createTableQuery)
+  .then(() => getPromise("INSERT INTO books (title) VALUES (null)"))
   .catch((err) => console.log(err.message))
-  .then(() => droptable())
-  .then(() => getRows())
-  .catch((err) => console.log(err.message));
+  .then(() => allPromise("select * from book"))
+  .catch((err) => console.log(err.message))
+  .then(() => runPromise(dropQuery));

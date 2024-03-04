@@ -2,19 +2,15 @@
 
 import {
   createTableQuery,
-  droptable,
-  createTable,
-  insertRow,
-  getLastRowId,
-  getRows,
-} from "../common.js";
+  insertRowQuery,
+  selectQuery,
+  dropQuery,
+  runPromise,
+  getPromise,
+  allPromise,
+} from "../common_function_query.js";
 
-main();
-
-async function main() {
-  await droptable();
-  await createTable(createTableQuery);
-  await insertRow("async");
-  await getLastRowId();
-  await getRows();
-}
+await runPromise(createTableQuery);
+await getPromise(insertRowQuery);
+await allPromise(selectQuery);
+await runPromise(dropQuery);

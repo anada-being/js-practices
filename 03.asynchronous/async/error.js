@@ -2,27 +2,15 @@
 
 import {
   createTableQuery,
-  droptable,
-  createTable,
-  insertRow,
-  getRows,
-} from "../common.js";
+  insertRowQuery,
+  selectQuery,
+  dropQuery,
+  runPromise,
+  getPromise,
+  allPromise,
+} from "../common_function_query.js";
 
-errorGet();
-
-async function errorGet() {
-  await droptable();
-  await createTable(createTableQuery);
-  try {
-    await insertRow();
-  } catch (err) {
-    console.log(err.message);
-  }
-  await droptable();
-  try {
-    await getRows();
-  } catch (err) {
-    console.log(err.message);
-  }
-  await droptable();
-}
+await runPromise(createTableQuery);
+await getPromise(insertRowQuery);
+await allPromise(selectQuery);
+await runPromise(dropQuery);

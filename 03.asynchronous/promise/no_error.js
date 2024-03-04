@@ -2,16 +2,15 @@
 
 import {
   createTableQuery,
-  droptable,
-  createTable,
-  insertRow,
-  getLastRowId,
-  getRows,
-} from "../common.js";
+  insertRowQuery,
+  selectQuery,
+  dropQuery,
+  runPromise,
+  getPromise,
+  allPromise,
+} from "../common_function_query.js";
 
-droptable()
-  .then(() => createTable(createTableQuery))
-  .then(() => insertRow("test"))
-  .then(() => getLastRowId())
-  .then(() => getRows())
-  .then(() => droptable());
+runPromise(createTableQuery)
+  .then(() => getPromise(insertRowQuery))
+  .then(() => allPromise(selectQuery))
+  .then(() => runPromise(dropQuery));

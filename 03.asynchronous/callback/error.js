@@ -10,9 +10,23 @@ db.run(
 )`,
   () => {
     db.get("INSERT INTO books (title) VALUES (null)", (err) => {
-      console.log(err.message);
-      db.all("select * from book", (err) => {
+      try {
+        if (err["errno"] == 19) {
+          throw err;
+        }
+        console.log(err);
+      } catch (err) {
         console.log(err.message);
+      }
+      db.all("select * from book", (err) => {
+        try {
+          if (err["errno"] == 1) {
+            throw err;
+          }
+          console.log(err);
+        } catch (err) {
+          console.log(err.message);
+        }
         db.run("drop table if exists books");
       });
     });
