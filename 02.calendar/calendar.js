@@ -10,7 +10,7 @@ const month = args["m"];
 const year = args["y"];
 
 try {
-  if (month != undefined && !(month > 0 && month < 13)) {
+  if (month != undefined && !(month >= 1 && month <= 12)) {
     throw new Error(`cal: ${month} is not a month number (1..12)`);
   }
   if (year != undefined && !((year > 1969 && year < 2101) || year === true)) {
@@ -67,13 +67,14 @@ try {
 }
 
 function setMonth(month) {
-  if (month == firstDate.getMonth()) {
+  if (month == firstDate.getMonth() + 1) {
     return true;
   }
-  const monthForSet = args["m"] - 1;
+  const monthForSet = month - 1;
   firstDate.setMonth(monthForSet);
   lastDate.setMonth(monthForSet);
 }
+
 function setYear(year) {
   if (year === true || year == firstDate.getFullYear()) {
     return true;
