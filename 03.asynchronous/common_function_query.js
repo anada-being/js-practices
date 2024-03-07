@@ -1,57 +1,29 @@
 #!/usr/bin/env node
 
-import sqlite3 from "sqlite3";
-
-const db = new sqlite3.Database(":memory:");
-const createTableQuery = `
-  CREATE TABLE books (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    title TEXT NOT NULL UNIQUE
-  )
-`;
-const insertRowQuery =
-  "INSERT INTO books (title) VALUES ('Ruby入門') RETURNING id";
-const selectQuery = "SELECT * FROM books";
-const dropQuery = "DROP TABLE books";
-
-function runPromise(query) {
-  return new Promise((resolve) => {
-    db.run(query, () => resolve());
-  });
-}
-
-function getPromise(query) {
+function runPromise(db, query, bool) {
   return new Promise((resolve, reject) => {
-    db.get(query, (err, rowId) => {
+    db.run(query, function (err) {
       if (err) {
         reject(err);
+      } else if (bool) {
+        resolve(this.lastID);
       } else {
-        console.log(rowId);
         resolve();
       }
     });
   });
 }
 
-function allPromise(query) {
+function allPromise(db, query) {
   return new Promise((resolve, reject) => {
     db.all(query, (err, rows) => {
       if (err) {
         reject(err);
       } else {
-        console.log(rows);
-        resolve();
+        resolve(rows);
       }
     });
   });
 }
 
-export {
-  createTableQuery,
-  insertRowQuery,
-  selectQuery,
-  dropQuery,
-  runPromise,
-  getPromise,
-  allPromise,
-};
+export { runPromise, allPromise };

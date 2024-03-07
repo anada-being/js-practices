@@ -10,24 +10,10 @@ db.run(
   title TEXT NOT NULL UNIQUE
 )`,
   () => {
-    db.get("INSERT INTO books (title) VALUES (null)", (err) => {
-      try {
-        if (err["errno"] == 19) {
-          throw err;
-        }
-        console.error(err);
-      } catch (err) {
+    db.get("INSERT INTO books (title) VALUES (null)", function (err) {
+      console.error(err.message);
+      db.all("SELECT * FROM book", function (err) {
         console.error(err.message);
-      }
-      db.all("SELECT * FROM book", (err) => {
-        try {
-          if (err["errno"] == 1) {
-            throw err;
-          }
-          console.error(err);
-        } catch (err) {
-          console.error(err.message);
-        }
         db.run("DROP TABLE books");
       });
     });
