@@ -28,9 +28,7 @@ runPromise(
   })
   .then(
     (rows) => {
-      if (rows) {
-        console.log(rows);
-      }
+      console.log(rows);
       return runPromise(db, "DROP TABLE books");
     },
     (err) => {
