@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 
-function runPromise(db, query, bool) {
+function runPromise(db, query) {
   return new Promise((resolve, reject) => {
     db.run(query, function (err) {
       if (err) {
         reject(err);
-      } else if (bool) {
-        resolve(this.lastID);
+      } else if (this) {
+        resolve(this);
       } else {
         resolve();
       }

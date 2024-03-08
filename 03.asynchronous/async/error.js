@@ -7,27 +7,26 @@ const db = new sqlite3.Database(":memory:");
 
 await runPromise(
   db,
-  `CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT,title TEXT NOT NULL UNIQUE)`,
+  `CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)`,
 );
 try {
-  const insertResult = await runPromise(
+  const runResult = await runPromise(
     db,
     `INSERT INTO books (title) VALUES (null)`,
-    true,
   );
-  console.log(insertResult);
+  console.log(runResult.lastID);
 } catch (err) {
-  if (err["code"] == "SQLITE_CONSTRAINT") {
+  if (err["code"] === "SQLITE_CONSTRAINT") {
     console.error(err.message);
   } else {
     throw err;
   }
 }
 try {
-  const allResult = await allPromise(db, "SELECT * FROM book");
-  console.log(allResult);
+  const rows = await allPromise(db, "SELECT * FROM book");
+  console.log(rows);
 } catch (err) {
-  if (err["code"] == "SQLITE_ERROR") {
+  if (err["code"] === "SQLITE_ERROR") {
     console.error(err.message);
   } else {
     throw err;
