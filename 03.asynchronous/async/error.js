@@ -16,8 +16,8 @@ try {
   );
   console.log(runResult.lastID);
 } catch (err) {
-  if (err["code"] === "SQLITE_CONSTRAINT") {
-    console.error(err.message);
+  if (err.message.includes("SQLITE_CONSTRAINT")) {
+    console.error(err);
   } else {
     throw err;
   }
@@ -26,7 +26,7 @@ try {
   const rows = await allPromise(db, "SELECT * FROM book");
   console.log(rows);
 } catch (err) {
-  if (err["code"] === "SQLITE_ERROR") {
+  if (err.message.includes("SQLITE_ERROR")) {
     console.error(err.message);
   } else {
     throw err;

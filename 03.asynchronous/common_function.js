@@ -5,10 +5,8 @@ function runPromise(db, query) {
     db.run(query, function (err) {
       if (err) {
         reject(err);
-      } else if (this) {
-        resolve(this);
       } else {
-        resolve();
+        resolve(this);
       }
     });
   });

@@ -11,29 +11,20 @@ runPromise(
 )
   .then(() => runPromise(db, `INSERT INTO books (title) VALUES (null)`))
   .catch((err) => {
-    console.error(err.message);
-  })
-  .then((runResult) => {
-    console.log(runResult.lastID);
-    return allPromise(db, "SELECT * FROM book");
-  })
-  .catch((err) => {
-    if (err["code"] === "SQLITE_ERROR") {
+    if (err.message.includes("SQLITE_CONSTRAINT")) {
       console.error(err.message);
     } else {
       throw err;
     }
   })
-  .then(
-    (rows) => {
-      console.log(rows);
-      return runPromise(db, "DROP TABLE books");
-    },
-    (err) => {
-      if (err["code"] === "SQLITE_ERROR") {
-        console.error(err.message);
-      } else {
-        throw err;
-      }
-    },
-  );
+  .then(() => {
+    return allPromise(db, "SELECT * FROM book");
+  })
+  .catch((err) => {
+    if (err.message.includes("SQLITE_ERROR")) {
+      console.error(err.message);
+    } else {
+      throw err;
+    }
+  })
+  .then(() => runPromise(db, "DROP TABLE books"));
