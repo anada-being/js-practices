@@ -17,7 +17,7 @@ try {
   console.log(runResult.lastID);
 } catch (err) {
   if (err.message.includes("SQLITE_CONSTRAINT")) {
-    console.error(err);
+    console.error(err.message);
   } else {
     throw err;
   }
