@@ -14,9 +14,7 @@ runPromise(
     console.error(err.message);
   })
   .then((runResult) => {
-    if (runResult) {
-      console.log(runResult.lastID);
-    }
+    console.log(runResult.lastID);
     return allPromise(db, "SELECT * FROM book");
   })
   .catch((err) => {

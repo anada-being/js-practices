@@ -11,9 +11,7 @@ runPromise(
 )
   .then(() => runPromise(db, `INSERT INTO books (title) VALUES ("Ruby入門")`))
   .then((runResult) => {
-    if (runResult) {
-      console.log(runResult.lastID);
-    }
+    console.log(runResult.lastID);
     return allPromise(db, "SELECT * FROM books");
   })
   .then((rows) => {
