@@ -10,8 +10,8 @@ runPromise(
   `CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)`,
 )
   .then(() => runPromise(db, `INSERT INTO books (title) VALUES ("Ruby入門")`))
-  .then((runResult) => {
-    console.log(runResult.lastID);
+  .then((result) => {
+    console.log(result.lastID);
     return allPromise(db, "SELECT * FROM books");
   })
   .then((rows) => {
