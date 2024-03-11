@@ -11,7 +11,7 @@ runPromise(
 )
   .then(() => runPromise(db, `INSERT INTO books (title) VALUES (null)`))
   .catch((err) => {
-    if (err.message.includes("SQLITE_CONSTRAINT")) {
+    if (err?.message && err.message.includes("SQLITE_CONSTRAINT")) {
       console.error(err.message);
     } else {
       throw err;
@@ -19,7 +19,7 @@ runPromise(
   })
   .then(() => allPromise(db, "SELECT * FROM book"))
   .catch((err) => {
-    if (err.message.includes("SQLITE_ERROR")) {
+    if (err?.message && err.message.includes("SQLITE_ERROR")) {
       console.error(err.message);
     } else {
       throw err;
