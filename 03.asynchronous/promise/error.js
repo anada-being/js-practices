@@ -17,9 +17,7 @@ runPromise(
       throw err;
     }
   })
-  .then(() => {
-    return allPromise(db, "SELECT * FROM book");
-  })
+  .then(() => allPromise(db, "SELECT * FROM book"))
   .catch((err) => {
     if (err.message.includes("SQLITE_ERROR")) {
       console.error(err.message);
