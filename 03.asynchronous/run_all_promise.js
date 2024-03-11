@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 function runPromise(db, query) {
   return new Promise((resolve, reject) => {
     db.run(query, function (err) {
