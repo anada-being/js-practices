@@ -9,7 +9,7 @@ db.run(
   () => {
     db.run("INSERT INTO books (title) VALUES ('Ruby入門')", function () {
       console.log(this.lastID);
-      db.all("SELECT * FROM books", (err, rows) => {
+      db.all("SELECT * FROM books", (_, rows) => {
         console.log(rows);
         db.run("DROP TABLE books");
       });
