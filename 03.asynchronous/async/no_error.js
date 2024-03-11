@@ -9,11 +9,11 @@ await runPromise(
   db,
   `CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)`,
 );
-const runResult = await runPromise(
+const result = await runPromise(
   db,
   `INSERT INTO books (title) VALUES ("Ruby入門")`,
 );
-console.log(runResult.lastID);
-const allResult = await allPromise(db, "SELECT * FROM books");
-console.log(allResult);
+console.log(result.lastID);
+const rows = await allPromise(db, "SELECT * FROM books");
+console.log(rows);
 await runPromise(db, "DROP TABLE books");
