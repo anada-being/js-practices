@@ -7,11 +7,11 @@ const db = new sqlite3.Database(":memory:");
 
 await runPromise(
   db,
-  `CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)`,
+  "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)",
 );
 const result = await runPromise(
   db,
-  `INSERT INTO books (title) VALUES ("Ruby入門")`,
+  "INSERT INTO books (title) VALUES ('Ruby入門')",
 );
 console.log(result.lastID);
 const rows = await allPromise(db, "SELECT * FROM books");

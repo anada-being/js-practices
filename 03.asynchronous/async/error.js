@@ -7,12 +7,12 @@ const db = new sqlite3.Database(":memory:");
 
 await runPromise(
   db,
-  `CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)`,
+  "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)",
 );
 try {
   const result = await runPromise(
     db,
-    `INSERT INTO books (title) VALUES (null)`,
+    "INSERT INTO books (title) VALUES (NULL)",
   );
   console.log(result.lastID);
 } catch (err) {

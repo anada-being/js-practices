@@ -7,7 +7,7 @@ const db = new sqlite3.Database(":memory:");
 
 runPromise(
   db,
-  `CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)`,
+  "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)",
 )
   .then(() => runPromise(db, `INSERT INTO books (title) VALUES ("Ruby入門")`))
   .then((result) => {
