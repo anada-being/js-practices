@@ -10,11 +10,11 @@ await runPromise(
   `CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)`,
 );
 try {
-  const runResult = await runPromise(
+  const result = await runPromise(
     db,
     `INSERT INTO books (title) VALUES (null)`,
   );
-  console.log(runResult.lastID);
+  console.log(result.lastID);
 } catch (err) {
   if (err?.message && err.message.includes("SQLITE_CONSTRAINT")) {
     console.error(err.message);
