@@ -16,11 +16,7 @@ try {
   );
   console.log(result.lastID);
 } catch (err) {
-  if (
-    err instanceof Error &&
-    Object.keys(err).includes("code") &&
-    err.code === "SQLITE_CONSTRAINT"
-  ) {
+  if (err instanceof Error && err.code === "SQLITE_CONSTRAINT") {
     console.error(err.message);
   } else {
     throw err;
@@ -30,11 +26,7 @@ try {
   const rows = await allPromise(db, "SELECT * FROM book");
   console.log(rows);
 } catch (err) {
-  if (
-    err instanceof Error &&
-    Object.keys(err).includes("code") &&
-    err.code === "SQLITE_ERROR"
-  ) {
+  if (err instanceof Error && err.code === "SQLITE_ERROR") {
     console.error(err.message);
   } else {
     throw err;
