@@ -1,0 +1,11 @@
+- Memo
+  - value
+  - name
+  - description
+
+- DB
+  - createMemo(content)
+  - getMemo()
+  - deleteMemo(id)
+  - runPromise(db, query, params)
+  - allPromise(db, query)
