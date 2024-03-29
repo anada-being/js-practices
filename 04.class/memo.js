@@ -12,17 +12,17 @@ async function main() {
   const db = new DB();
 
   if (isPipedInput) {
-    process.stdin.setEncoding('utf8');
-    let inputData = '';
-    process.stdin.on('data', function (data) {
+    process.stdin.setEncoding("utf8");
+    let inputData = "";
+    process.stdin.on("data", function (data) {
       inputData += data;
     });
 
-    process.stdin.on('end', function () {
+    process.stdin.on("end", function () {
       console.log(inputData);
-      db.createMemo(inputData).then(()=>{
-        process.exit();  
-      })
+      db.createMemo(inputData).then(() => {
+        process.exit();
+      });
     });
   }
 
@@ -31,30 +31,30 @@ async function main() {
     memos.forEach((memo, index) => {
       memos[index] = new Memo(memo.id, memo.content);
     });
-    if(argv.l){
-      memos.forEach((memo)=> {
+    if (argv.l) {
+      memos.forEach((memo) => {
         console.log(memo.name);
       });
     }
     if (argv.r) {
       const answer = await selectMemo(memos);
       memos.forEach((memo) => {
-        if (answer === memo.value){
+        if (answer === memo.value) {
           console.log(memo.description);
         }
-      })
+      });
     }
     if (argv.d) {
-    const answer = await selectMemo(memos);
-    db.deleteMemo(answer);
+      const answer = await selectMemo(memos);
+      db.deleteMemo(answer);
     }
   }
 }
 
 class Memo {
-  constructor(id, content){
+  constructor(id, content) {
     this.value = id;
-    this.name = content.slice(0, content.indexOf('\n'));
+    this.name = content.slice(0, content.indexOf("\n"));
     this.description = content;
   }
 }

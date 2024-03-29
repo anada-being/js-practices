@@ -9,21 +9,13 @@ await runPromise(
 
 class DB {
   async createMemo(content) {
-    await runPromise(
-      db,
-      "INSERT INTO memos (content) VALUES (?)",
-      [content]
-    );
+    await runPromise(db, "INSERT INTO memos (content) VALUES (?)", [content]);
   }
-  async getMemo(){
+  async getMemo() {
     return await allPromise(db, "SELECT * FROM memos");
   }
-  async deleteMemo(id){
-    await runPromise(
-      db,
-      "DELETE FROM memos WHERE id = ?",
-      [id]
-    )
+  async deleteMemo(id) {
+    await runPromise(db, "DELETE FROM memos WHERE id = ?", [id]);
   }
 }
 
