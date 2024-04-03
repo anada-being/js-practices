@@ -2,12 +2,13 @@ import sqlite3 from "sqlite3";
 
 const db = new sqlite3.Database("./memo.db");
 
-await runPromise(
-  db,
-  "CREATE TABLE IF NOT EXISTS memos (id INTEGER PRIMARY KEY AUTOINCREMENT, content TEXT NOT NULL)",
-);
-
 export class MemoDB {
+  constructor(){
+    runPromise(
+      db,
+      "CREATE TABLE IF NOT EXISTS memos (id INTEGER PRIMARY KEY AUTOINCREMENT, content TEXT NOT NULL)",
+    );
+  }
   async createMemo(content) {
     await runPromise(db, "INSERT INTO memos (content) VALUES (?)", [content]);
   }
