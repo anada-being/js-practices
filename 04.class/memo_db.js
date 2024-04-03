@@ -4,10 +4,10 @@ const db = new sqlite3.Database("./memo.db");
 
 await runPromise(
   db,
-  "CREATE TABLE IF NOT EXISTS memos (id INTEGER PRIMARY KEY AUTOINCREMENT, content TEXT NOT NULL UNIQUE)",
+  "CREATE TABLE IF NOT EXISTS memos (id INTEGER PRIMARY KEY AUTOINCREMENT, content TEXT NOT NULL)",
 );
 
-class DB {
+export class MemoDB {
   async createMemo(content) {
     await runPromise(db, "INSERT INTO memos (content) VALUES (?)", [content]);
   }
@@ -43,4 +43,3 @@ function allPromise(db, query) {
   });
 }
 
-export { DB };

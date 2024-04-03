@@ -1,15 +1,15 @@
 #!/usr/bin/env node
 
 import minimist from "minimist";
-import { DB } from "./db.js";
-import { selectMemo } from "./selectMemo.js";
+import { select } from "@inquirer/prompts";
+import { MemoDB } from "./memo_db.js";
 
 main();
 
 async function main() {
   const isPipedInput = !process.stdin.isTTY;
   const argv = minimist(process.argv.slice(2));
-  const db = new DB();
+  const db = new MemoDB();
 
   if (isPipedInput) {
     process.stdin.setEncoding("utf8");
@@ -19,7 +19,6 @@ async function main() {
     });
 
     process.stdin.on("end", function () {
-      console.log(inputData);
       db.createMemo(inputData).then(() => {
         process.exit();
       });
@@ -51,10 +50,21 @@ async function main() {
   }
 }
 
+async function selectMemo(memos) {
+  return await select({
+    message: "Choose a memo:",
+    choices: memos.map((memo) => ({
+      value: memo.id,
+      name: memo.title,
+      description: memo.content,
+    })),
+  });
+}
+
 class Memo {
   constructor(id, content) {
-    this.value = id;
-    this.name = content.slice(0, content.indexOf("\n"));
-    this.description = content;
+    this.id = id;
+    this.title = content.slice(0, content.indexOf("\n"));
+    this.content = content;
   }
 }
