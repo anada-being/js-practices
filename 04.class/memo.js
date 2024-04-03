@@ -4,8 +4,6 @@ import minimist from "minimist";
 import { select } from "@inquirer/prompts";
 import { MemoDB } from "./memo_db.js";
 
-main();
-
 async function main() {
   const isPipedInput = !process.stdin.isTTY;
   const argv = minimist(process.argv.slice(2));
@@ -14,14 +12,13 @@ async function main() {
   if (isPipedInput) {
     process.stdin.setEncoding("utf8");
     let inputData = "";
-    process.stdin.on("data", function (data) {
+    process.stdin.on("data", (data) => {
       inputData += data;
     });
 
-    process.stdin.on("end", function () {
-      db.createMemo(inputData).then(() => {
-        process.exit();
-      });
+    process.stdin.on("end", async () => {
+      await db.createMemo(inputData)
+      process.exit();
     });
   }
 
@@ -68,3 +65,5 @@ class Memo {
     this.content = content;
   }
 }
+
+main();
