@@ -34,11 +34,17 @@ async function main() {
       });
     }
     if (argv.r) {
+      if (memos.length === 0){
+        return console.log("メモはまだありません")
+      }
       const answer = await selectMemo(memos);
       const found = memos.find((memo) => memo.id === answer);
       console.log(found.content);
     }
     if (argv.d) {
+      if (memos.length === 0){
+        return console.log("メモはまだありません")
+      }
       const answer = await selectMemo(memos);
       await db.deleteMemo(answer);
     }

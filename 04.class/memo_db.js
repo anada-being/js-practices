@@ -13,7 +13,7 @@ export class MemoDB {
     await runPromise(db, "INSERT INTO memos (content) VALUES (?)", [content]);
   }
   async getMemo() {
-    return await allPromise(db, "SELECT * FROM memos");
+    return await allPromise(db, "SELECT * FROM memos ORDER BY id");
   }
   async deleteMemo(id) {
     await runPromise(db, "DELETE FROM memos WHERE id = ?", [id]);
