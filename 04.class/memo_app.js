@@ -24,9 +24,10 @@ async function main() {
 
   if (argv.l || argv.r || argv.d) {
     process.stdin.pause();
-    let memos = await db.getMemo();
-    memos.forEach((memo, index) => {
-      memos[index] = new Memo(memo.id, memo.content);
+    const memosDB = await db.getMemo();
+    const memos = [];
+    memosDB.forEach((memo) => {
+      memos.push(new Memo(memo.id, memo.content));
     });
     if (argv.l) {
       memos.forEach((memo) => {
@@ -38,8 +39,8 @@ async function main() {
         return console.log("メモはまだありません")
       }
       const answer = await selectMemo(memos);
-      const found = memos.find((memo) => memo.id === answer);
-      console.log(found.content);
+      const selectedMemo = memos.find((memo) => memo.id === answer);
+      console.log(selectedMemo.content);
     }
     if (argv.d) {
       if (memos.length === 0){
