@@ -10,10 +10,10 @@ await db.createTable();
 const argv = minimist(process.argv.slice(2));
 
 function main() {
-  Object.values(argv).length === 1 ? stdinOut() : command()
+  Object.values(argv).length === 1 ? stdinOut() : command();
 }
 
-function stdinOut(){
+function stdinOut() {
   process.stdin.resume();
   process.stdin.setEncoding("utf8");
 
@@ -23,12 +23,12 @@ function stdinOut(){
   });
 
   process.stdin.on("end", async () => {
-    await db.createMemo(inputData)
+    await db.createMemo(inputData);
     process.exit();
   });
 }
 
-async function command(){
+async function command() {
   const memosDB = await db.getMemo();
   const memos = [];
   memosDB.forEach((memo) => {
@@ -44,14 +44,14 @@ async function command(){
     const selectedMemo = memos.find((memo) => memo.id === answer);
     console.log(selectedMemo.content);
   } else if (argv.d) {
-    const message = "choose a memo you want to delete"
+    const message = "choose a memo you want to delete";
     const answer = await memoController(memos, message);
     await db.deleteMemo(answer);
   }
 }
 
-function memoController(memos, message){
-  if (memos.length === 0){
+function memoController(memos, message) {
+  if (memos.length === 0) {
     console.log("メモはまだありません");
     process.exit();
   }
