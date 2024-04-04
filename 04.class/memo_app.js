@@ -45,7 +45,7 @@ async function command(){
     console.log(selectedMemo.content);
   } else if (argv.d) {
     const message = "choose a memo you want to delete"
-    const answer = memoController(memos, message);
+    const answer = await memoController(memos, message);
     await db.deleteMemo(answer);
   }
 }
