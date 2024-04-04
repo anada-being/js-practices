@@ -1,9 +1,9 @@
 - Memo
-  - value
-  - name
-  - description
+  - id
+  - title
+  - content
 
-- DB
+- MemoDB
   - createMemo(content)
   - getMemo()
   - deleteMemo(id)
