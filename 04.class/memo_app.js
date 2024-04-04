@@ -5,10 +5,15 @@ import { select } from "@inquirer/prompts";
 import { MemoDB } from "./memo_db.js";
 import { Memo } from "./memo.js";
 
-async function main() {
-  const argv = minimist(process.argv.slice(2));
-  const db = new MemoDB();
+const db = new MemoDB();
+await db.createTable();
+const argv = minimist(process.argv.slice(2));
 
+function main() {
+  Object.values(argv).length === 1 ? stdinOut() : command()
+}
+
+function stdinOut(){
   process.stdin.resume();
   process.stdin.setEncoding("utf8");
 
@@ -21,41 +26,41 @@ async function main() {
     await db.createMemo(inputData)
     process.exit();
   });
+}
 
-  if (argv.l || argv.r || argv.d) {
-    process.stdin.pause();
-    const memosDB = await db.getMemo();
-    const memos = [];
-    memosDB.forEach((memo) => {
-      memos.push(new Memo(memo.id, memo.content));
+async function command(){
+  const memosDB = await db.getMemo();
+  const memos = [];
+  memosDB.forEach((memo) => {
+    memos.push(new Memo(memo.id, memo.content));
+  });
+  if (argv.l) {
+    memos.forEach((memo) => {
+      console.log(memo.title);
     });
-    if (argv.l) {
-      memos.forEach((memo) => {
-        console.log(memo.title);
-      });
-    }
-    if (argv.r) {
-      if (memos.length === 0){
-        return console.log("メモはまだありません")
-      }
-      const answer = await selectMemo(memos);
-      const selectedMemo = memos.find((memo) => memo.id === answer);
-      console.log(selectedMemo.content);
-    }
-    if (argv.d) {
-      if (memos.length === 0){
-        return console.log("メモはまだありません")
-      }
-      const answer = await selectMemo(memos);
-      await db.deleteMemo(answer);
-    }
-    process.exit();
+  } else if (argv.r) {
+    const message = "choose a memo you want to see";
+    const answer = await memoController(memos, message);
+    const selectedMemo = memos.find((memo) => memo.id === answer);
+    console.log(selectedMemo.content);
+  } else if (argv.d) {
+    const message = "choose a memo you want to delete"
+    const answer = memoController(memos, message);
+    await db.deleteMemo(answer);
   }
 }
 
-async function selectMemo(memos) {
+function memoController(memos, message){
+  if (memos.length === 0){
+    console.log("メモはまだありません");
+    process.exit();
+  }
+  return selectMemo(message, memos);
+}
+
+async function selectMemo(message, memos) {
   return await select({
-    message: "Choose a memo:",
+    message: message,
     choices: memos.map((memo) => ({
       value: memo.id,
       name: memo.title,

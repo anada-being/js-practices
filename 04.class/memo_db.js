@@ -3,8 +3,8 @@ import sqlite3 from "sqlite3";
 const db = new sqlite3.Database("./memo.db");
 
 export class MemoDB {
-  constructor(){
-    runPromise(
+  async createTable(){
+    await runPromise(
       db,
       "CREATE TABLE IF NOT EXISTS memos (id INTEGER PRIMARY KEY AUTOINCREMENT, content TEXT NOT NULL)",
     );
