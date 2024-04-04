@@ -29,7 +29,7 @@ function stdinOut() {
 }
 
 async function command() {
-  const memosDB = await db.getMemo();
+  const memosDB = await db.getMemos();
   const memos = [];
   memosDB.forEach((memo) => {
     memos.push(new Memo(memo.id, memo.content));

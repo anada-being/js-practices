@@ -14,7 +14,7 @@ export class MemoDB {
       content,
     ]);
   }
-  async getMemo() {
+  async getMemos() {
     return await this.allPromise(db, "SELECT * FROM memos ORDER BY id");
   }
   async deleteMemo(id) {
