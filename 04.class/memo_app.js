@@ -5,15 +5,18 @@ import select from "@inquirer/select";
 import MemoDB from "./memo_db.js";
 import Memo from "./memo.js";
 
-const db = new MemoDB();
-await db.createTable();
-const argv = minimist(process.argv.slice(2));
-
-function main() {
-  Object.values(argv).length === 1 ? stdinOut() : command();
+async function main() {
+  const db = await new MemoDB();
+  await db.createTable();
+  const argv = minimist(process.argv.slice(2));
+  if (Object.values(argv).length === 1) {
+    stdinOut(db);
+  } else {
+    command(db, argv);
+  }
 }
 
-function stdinOut() {
+function stdinOut(db) {
   process.stdin.resume();
   process.stdin.setEncoding("utf8");
 
@@ -27,7 +30,7 @@ function stdinOut() {
   });
 }
 
-async function command() {
+async function command(db, argv) {
   const memosDB = await db.getMemos();
   const memos = [];
   memosDB.forEach((memo) => {
@@ -39,13 +42,13 @@ async function command() {
     });
   } else if (argv.r) {
     const message = "choose a memo you want to see";
-    const answer = await memoController(memos, message);
-    const selectedMemo = memos.find((memo) => memo.id === answer);
+    const selectedMemoID = await memoController(memos, message);
+    const selectedMemo = memos.find((memo) => memo.id === selectedMemoID);
     console.log(selectedMemo.content);
   } else if (argv.d) {
     const message = "choose a memo you want to delete";
-    const answer = await memoController(memos, message);
-    await db.deleteMemo(answer);
+    const selectedMemoID = await memoController(memos, message);
+    await db.deleteMemo(selectedMemoID);
   }
 }
 
@@ -58,14 +61,19 @@ function memoController(memos, message) {
 }
 
 async function selectMemo(message, memos) {
-  return await select({
-    message: message,
-    choices: memos.map((memo) => ({
-      value: memo.id,
-      name: memo.title,
-      description: memo.content,
-    })),
-  });
+  try {
+    return await select({
+      message: message,
+      choices: memos.map((memo) => ({
+        value: memo.id,
+        name: memo.title,
+        description: memo.content,
+      })),
+    });
+  } catch(err) {
+    console.error(err.message);
+    process.exit();
+  }
 }
 
 main();
