@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import minimist from "minimist";
-import { select } from "@inquirer/prompts";
+import select from "@inquirer/select";
 import MemoDB from "./memo_db.js";
 import Memo from "./memo.js";
 
