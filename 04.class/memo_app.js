@@ -2,8 +2,8 @@
 
 import minimist from "minimist";
 import { select } from "@inquirer/prompts";
-import { MemoDB } from "./memo_db.js";
-import { Memo } from "./memo.js";
+import MemoDB from "./memo_db.js";
+import Memo from "./memo.js";
 
 const db = new MemoDB();
 await db.createTable();
@@ -24,7 +24,6 @@ function stdinOut() {
 
   process.stdin.on("end", async () => {
     await db.createMemo(inputData);
-    process.exit();
   });
 }
 
