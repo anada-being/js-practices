@@ -1,4 +1,5 @@
 import DB from "./db.js"
+import Memo from "./memo.js";
 
 class MemoDB {
   db = new DB();
@@ -15,8 +16,9 @@ class MemoDB {
     ]);
   }
 
-  getMemos() {
-    return this.db.allPromise("SELECT * FROM memos ORDER BY id");
+  async getMemos() {
+    const memoDB = await this.db.allPromise("SELECT * FROM memos ORDER BY id");
+    return memoDB.map((memo) => new Memo(memo.id, memo.content));
   }
 
   deleteMemo(id) {

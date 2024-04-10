@@ -3,7 +3,6 @@
 import minimist from "minimist";
 import select from "@inquirer/select";
 import MemoDB from "./memo_db.js";
-import Memo from "./memo.js";
 
 async function main() {
   const db = await new MemoDB();
@@ -31,11 +30,7 @@ function receiveStdin(db) {
 }
 
 async function dispatchArgv(db, argv) {
-  const memosDB = await db.getMemos();
-  const memos = [];
-  memosDB.forEach((memo) => {
-    memos.push(new Memo(memo.id, memo.content));
-  });
+  const memos = await db.getMemos();
   if (argv.l) {
     memos.forEach((memo) => {
       console.log(memo.title);
