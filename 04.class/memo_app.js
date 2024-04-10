@@ -10,13 +10,13 @@ async function main() {
   await db.createTable();
   const argv = minimist(process.argv.slice(2));
   if (Object.values(argv).length === 1) {
-    stdinOut(db);
+    receiveStdin(db);
   } else {
-    command(db, argv);
+    dispatchArgv(db, argv);
   }
 }
 
-function stdinOut(db) {
+function receiveStdin(db) {
   process.stdin.resume();
   process.stdin.setEncoding("utf8");
 
@@ -30,7 +30,7 @@ function stdinOut(db) {
   });
 }
 
-async function command(db, argv) {
+async function dispatchArgv(db, argv) {
   const memosDB = await db.getMemos();
   const memos = [];
   memosDB.forEach((memo) => {
@@ -42,25 +42,21 @@ async function command(db, argv) {
     });
   } else if (argv.r) {
     const message = "choose a memo you want to see";
-    const selectedMemoID = await memoController(memos, message);
+    const selectedMemoID = await selectMemo(memos, message);
     const selectedMemo = memos.find((memo) => memo.id === selectedMemoID);
     console.log(selectedMemo.content);
   } else if (argv.d) {
     const message = "choose a memo you want to delete";
-    const selectedMemoID = await memoController(memos, message);
+    const selectedMemoID = await selectMemo(memos, message);
     await db.deleteMemo(selectedMemoID);
   }
 }
 
-function memoController(memos, message) {
+async function selectMemo(memos, message) {
   if (memos.length === 0) {
     console.log("メモはまだありません");
     process.exit();
   }
-  return selectMemo(message, memos);
-}
-
-async function selectMemo(message, memos) {
   try {
     return await select({
       message: message,
