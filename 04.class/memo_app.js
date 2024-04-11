@@ -61,7 +61,7 @@ async function selectMemo(memos, message) {
         description: memo.content,
       })),
     });
-  } catch(err) {
+  } catch (err) {
     console.error(err.message);
     process.exit();
   }

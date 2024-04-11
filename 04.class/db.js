@@ -16,7 +16,7 @@ export default class DB {
       });
     });
   }
-  
+
   allPromise(query) {
     return new Promise((resolve, reject) => {
       this.db.all(query, (err, rows) => {

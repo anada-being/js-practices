@@ -1,4 +1,4 @@
-import DB from "./db.js"
+import DB from "./db.js";
 import Memo from "./memo.js";
 
 class MemoDB {
