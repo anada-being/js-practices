@@ -10,7 +10,7 @@
   },
   "type": "module",
   "dependencies": {
-    "@inquirer/select": "^2.2.2",
+    "@inquirer/prompts": "^4.3.2",
     "minimist": "^1.2.8",
     "npm": "^10.5.1",
     "sqlite3": "^5.1.7"

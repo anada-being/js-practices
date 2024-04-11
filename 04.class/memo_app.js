@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import minimist from "minimist";
-import select from "@inquirer/select";
+import * as inquirer from "@inquirer/prompts";
 import MemoDB from "./memo_db.js";
 
 async function main() {
@@ -53,7 +53,7 @@ async function selectMemo(memos, message) {
     process.exit();
   }
   try {
-    return await select({
+    return await inquirer.select({
       message: message,
       choices: memos.map((memo) => ({
         value: memo.id,
