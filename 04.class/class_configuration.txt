@@ -4,10 +4,13 @@
   - content
 
 - MemoDB
+  - createTable()
   - createMemo(content)
-  - getMemo()
+  - getMemos()
   - deleteMemo(id)
 
 - DB
+  - db
+
   - runPromise(query, params)
-  - allPromise(query)
+  - allPromise(query, params)

@@ -54,7 +54,6 @@ async function showOrDeleteMemo(memoDb, argv) {
       await memoDb.deleteMemo(selectedMemo.id);
     }
   } catch (err) {
-    console.log(Boolean(err));
     console.error(err.message);
   }
 }

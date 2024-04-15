@@ -3,7 +3,7 @@ import Memo from "./memo.js";
 
 export default class MemoDB {
   constructor() {
-    this.db = new DB();
+    this.db = new DB("memo");
   }
 
   createTable() {
@@ -19,10 +19,10 @@ export default class MemoDB {
   }
 
   async getMemos() {
-    const memorows = await this.db.allPromise(
+    const memoRows = await this.db.allPromise(
       "SELECT * FROM memos ORDER BY id",
     );
-    return memorows.map((memorow) => new Memo(memorow.id, memorow.content));
+    return memoRows.map((memorow) => new Memo(memorow.id, memorow.content));
   }
 
   deleteMemo(id) {
