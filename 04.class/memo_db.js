@@ -19,13 +19,13 @@ export default class MemoDB {
   }
 
   async getMemos() {
-    const memoDB = await this.db.allPromise("SELECT * FROM memos ORDER BY id");
-    return memoDB.map((memo) => new Memo(memo.id, memo.content));
+    const memorows = await this.db.allPromise(
+      "SELECT * FROM memos ORDER BY id",
+    );
+    return memorows.map((memorow) => new Memo(memorow.id, memorow.content));
   }
 
   deleteMemo(id) {
     return this.db.runPromise("DELETE FROM memos WHERE id = ?", [id]);
   }
 }
-
-export default MemoDB;
