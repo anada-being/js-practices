@@ -1,8 +1,10 @@
 import DB from "./db.js";
 import Memo from "./memo.js";
 
-class MemoDB {
-  db = new DB();
+export default class MemoDB {
+  constructor() {
+    this.db = new DB();
+  }
 
   createTable() {
     return this.db.runPromise(
