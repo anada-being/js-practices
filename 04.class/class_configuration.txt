@@ -3,7 +3,12 @@
   - title
   - content
 
+  - firstRow(content)
+  - onlyRow(content)
+
 - MemoDB
+  - db
+
   - createTable()
   - createMemo(content)
   - getMemos()
