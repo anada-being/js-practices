@@ -5,11 +5,11 @@ import * as inquirer from "@inquirer/prompts";
 import MemoDB from "./memo_db.js";
 
 async function main() {
-  const memoDb = await new MemoDB();
+  const memoDb = new MemoDB();
   await memoDb.createTable();
   const argv = minimist(process.argv.slice(2));
   if (Object.values(argv).length === 1) {
-    const inputData = receiveFromStdin();
+    const inputData = await receiveFromStdin();
     await memoDb.createMemo(inputData);
   } else {
     showOrDeleteMemo(memoDb, argv);
@@ -17,16 +17,18 @@ async function main() {
 }
 
 function receiveFromStdin() {
-  process.stdin.resume();
-  process.stdin.setEncoding("utf8");
+  return new Promise((resolve) => {
+    process.stdin.resume();
+    process.stdin.setEncoding("utf8");
 
-  let inputData = "";
-  process.stdin.on("data", (data) => {
-    inputData += data;
-  });
+    let inputData = "";
+    process.stdin.on("data", (data) => {
+      inputData += data;
+    });
 
-  process.stdin.on("end", async () => {
-    return inputData;
+    process.stdin.on("end", async () => {
+      resolve(inputData);
+    });
   });
 }
 
@@ -36,7 +38,7 @@ async function showOrDeleteMemo(memoDb, argv) {
   try {
     if (argv.l) {
       memos.forEach((memo) => {
-        console.log(memo.title);
+        console.log(showTitle(memo));
       });
     } else if (argv.r) {
       const message = "choose a memo you want to see";
@@ -67,12 +69,20 @@ async function selectMemo(memos, message) {
       message: message,
       choices: memos.map((memo) => ({
         value: memo,
-        name: memo.title,
+        name: showTitle(memo),
         description: memo.content,
       })),
     });
   } catch (err) {
     return err;
+  }
+}
+
+function showTitle(memo) {
+  if (memo.title) {
+    return memo.title;
+  } else {
+    return "NoTitle";
   }
 }
 
