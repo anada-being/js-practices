@@ -3,7 +3,7 @@ import Memo from "./memo.js";
 
 export default class MemoDB {
   constructor() {
-    this.db = new DB("memo");
+    this.db = new DB("memo.db");
   }
 
   createTable() {

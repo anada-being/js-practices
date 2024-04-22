@@ -2,7 +2,7 @@ import sqlite3 from "sqlite3";
 
 export default class DB {
   constructor(filename) {
-    this.db = new sqlite3.Database(`./${filename}.db`);
+    this.db = new sqlite3.Database(`./${filename}`);
   }
 
   runPromise(query, params) {
