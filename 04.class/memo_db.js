@@ -22,7 +22,7 @@ export default class MemoDB {
     const memoRows = await this.db.allPromise(
       "SELECT * FROM memos ORDER BY id",
     );
-    return memoRows.map((memorow) => new Memo(memorow.id, memorow.content));
+    return memoRows.map((memoRow) => new Memo(memoRow.id, memoRow.content));
   }
 
   deleteMemo(id) {
