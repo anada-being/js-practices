@@ -3,8 +3,8 @@
   - title
   - content
 
-  - firstRow(content)
-  - onlyRow(content)
+  - #setTitle(content)
+  - showTitle()
 
 - MemoDB
   - db

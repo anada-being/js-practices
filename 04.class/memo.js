@@ -1,11 +1,11 @@
 export default class Memo {
   constructor(id, content) {
     this.id = id;
-    this.title = this.setTitle(content);
+    this.title = this.#setTitle(content);
     this.content = content;
   }
 
-  setTitle(content) {
+  #setTitle(content) {
     if (content.match(/\S/) && !content.match(/\n/)) {
       return content;
     } else {
