@@ -12,7 +12,7 @@ async function main() {
     const inputData = await receiveFromStdin();
     await memoDb.createMemo(inputData);
   } else {
-    showOrDeleteMemo(memoDb, argv);
+    handleMemo(memoDb, argv);
   }
 }
 
@@ -32,7 +32,7 @@ function receiveFromStdin() {
   });
 }
 
-async function showOrDeleteMemo(memoDb, argv) {
+async function handleMemo(memoDb, argv) {
   const memos = await memoDb.getMemos();
 
   if (argv.l) {
