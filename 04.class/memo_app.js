@@ -26,7 +26,7 @@ function receiveFromStdin() {
       inputData += data;
     });
 
-    process.stdin.on("end", async () => {
+    process.stdin.on("end", () => {
       resolve(inputData);
     });
   });
@@ -35,46 +35,43 @@ function receiveFromStdin() {
 async function showOrDeleteMemo(memoDb, argv) {
   const memos = await memoDb.getMemos();
 
-  try {
-    if (argv.l) {
-      memos.forEach((memo) => {
-        console.log(showTitle(memo));
-      });
-    } else if (argv.r) {
-      const message = "choose a memo you want to see";
-      const selectedMemo = await selectMemo(memos, message);
-      if (selectedMemo instanceof Error) {
-        throw selectedMemo;
-      }
-      console.log(selectedMemo.content);
-    } else if (argv.d) {
-      const message = "choose a memo you want to delete";
-      const selectedMemo = await selectMemo(memos, message);
-      if (selectedMemo instanceof Error) {
-        throw selectedMemo;
-      }
-      await memoDb.deleteMemo(selectedMemo.id);
+  if (argv.l) {
+    memos.forEach((memo) => {
+      console.log(showTitle(memo));
+    });
+  } else if (argv.r) {
+    const message = "choose a memo you want to see";
+    const selectedMemo = await selectMemo(memos, message);
+    if (!selectedMemo) {
+      process.exit();
     }
-  } catch (err) {
-    console.error(err.message);
+    console.log(selectedMemo.content);
+  } else if (argv.d) {
+    const message = "choose a memo you want to delete";
+    const selectedMemo = await selectMemo(memos, message);
+    if (!selectedMemo) {
+      process.exit();
+    }
+    await memoDb.deleteMemo(selectedMemo.id);
   }
 }
 
 async function selectMemo(memos, message) {
-  try {
-    if (memos.length === 0) {
-      throw new Error("まだメモはありません");
+  if (memos.length === 0) {
+    console.log("まだメモはありません");
+  } else {
+    try {
+      return await inquirer.select({
+        message: message,
+        choices: memos.map((memo) => ({
+          value: memo,
+          name: showTitle(memo),
+          description: memo.content,
+        })),
+      });  
+    } catch (err) {
+      console.error(err.message);
     }
-    return await inquirer.select({
-      message: message,
-      choices: memos.map((memo) => ({
-        value: memo,
-        name: showTitle(memo),
-        description: memo.content,
-      })),
-    });
-  } catch (err) {
-    return err;
   }
 }
 
