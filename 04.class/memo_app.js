@@ -37,7 +37,7 @@ async function handleMemo(memoDb, argv) {
 
   if (argv.l) {
     memos.forEach((memo) => {
-      console.log(memo.showTitle());
+      console.log(memo.title);
     });
   } else if (argv.r) {
     const message = "choose a memo you want to see";
@@ -65,7 +65,7 @@ async function selectMemo(memos, message) {
         message: message,
         choices: memos.map((memo) => ({
           value: memo,
-          name: memo.showTitle(),
+          name: memo.title,
           description: memo.content,
         })),
       });  
