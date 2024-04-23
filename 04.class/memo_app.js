@@ -70,11 +70,13 @@ async function selectMemo(memos, message) {
         })),
       });  
     } catch (err) {
-      console.error(err.message);
+      if(err instanceof Error && err instanceof inquirer.ExitPromptError) {
+        console.error(err.message);
+      } else {
+        throw err;
+      }
     }
   }
 }
-
-
 
 main();
