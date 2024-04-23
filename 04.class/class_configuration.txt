@@ -1,0 +1,21 @@
+- Memo
+  - id
+  - title
+  - content
+
+  - #makeTitle(content)
+  - #makeFirstRow(content)
+
+- MemoDB
+  - db
+
+  - createTable()
+  - createMemo(content)
+  - getMemos()
+  - deleteMemo(id)
+
+- DB
+  - db
+
+  - runPromise(query, params)
+  - allPromise(query, params)
