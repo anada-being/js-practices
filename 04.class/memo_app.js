@@ -66,9 +66,9 @@ async function selectMemo(memos, message) {
           name: memo.title,
           description: memo.content,
         })),
-      });  
+      });
     } catch (err) {
-      if(err instanceof Error && err instanceof inquirer.ExitPromptError) {
+      if (err instanceof Error && err instanceof inquirer.ExitPromptError) {
         console.error(err.message);
       } else {
         throw err;
