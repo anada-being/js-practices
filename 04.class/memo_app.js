@@ -42,17 +42,15 @@ async function handleMemo(memoDb, argv) {
   } else if (argv.r) {
     const message = "choose a memo you want to see";
     const selectedMemo = await selectMemo(memos, message);
-    if (!selectedMemo) {
-      process.exit();
+    if (selectedMemo) {
+      console.log(selectedMemo.content);
     }
-    console.log(selectedMemo.content);
   } else if (argv.d) {
     const message = "choose a memo you want to delete";
     const selectedMemo = await selectMemo(memos, message);
-    if (!selectedMemo) {
-      process.exit();
+    if (selectedMemo) {
+      await memoDb.deleteMemo(selectedMemo.id);
     }
-    await memoDb.deleteMemo(selectedMemo.id);
   }
 }
 
